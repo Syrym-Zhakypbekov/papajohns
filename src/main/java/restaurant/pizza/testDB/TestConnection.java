@@ -1,18 +1,18 @@
 package restaurant.pizza.testDB;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
 
+import java.sql.*;
+
+import restaurant.pizza.util.DBConfig;
 
 
 public class TestConnection {
 
 
     public void testConnection() throws Exception {
-        String url = "jdbc:postgresql://localhost:5432/postgres";
-        String user = "postgres";
-        String password = "admin";
+        String url = DBConfig.getDbUrl();
+        String user = DBConfig.getDbUsername();
+        String password = DBConfig.getDbPassword();
 
         try {
             Class.forName("org.postgresql.Driver");
@@ -31,7 +31,17 @@ public class TestConnection {
 
 
     public static void main(String[] args) {
-        System.out.println("Testing connection");
+
+        TestConnection testConnection = new TestConnection();
+
+
+        try {
+            testConnection.testConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
