@@ -9,7 +9,7 @@ import restaurant.pizza.util.DBConfig;
 public class TestConnection {
 
 
-    public void testConnection() throws Exception {
+    public static void testConnection() throws Exception {
         String url = DBConfig.getDbUrl();
         String user = DBConfig.getDbUsername();
         String password = DBConfig.getDbPassword();
@@ -29,19 +29,15 @@ public class TestConnection {
 
     }
 
-
     public static void main(String[] args) {
 
-        TestConnection testConnection = new TestConnection();
-
-
         try {
-            testConnection.testConnection();
+            testConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
     }
+
 
 }
