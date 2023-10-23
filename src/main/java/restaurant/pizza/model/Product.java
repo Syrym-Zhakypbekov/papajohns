@@ -7,9 +7,11 @@ import java.sql.Timestamp;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "product_id")
-    private int productId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_seq")
+    @SequenceGenerator(name = "products_seq", sequenceName = "products_seq", allocationSize = 1)
+    @Column(name = "product_id") // Use lowercase "product_id" to match the database column name.
+    private Long productId;
+
 
     @Column(name = "product_name")
     private String productName;
@@ -35,10 +37,32 @@ public class Product {
     @Column(name = "modified")
     private Timestamp modified;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        modified = new Timestamp(System.currentTimeMillis());
+    }
+    // Default constructor
+    public Product() {
+    }
+
+    // Overloaded constructor
+
+    public Product(String productName, double price) {
+        this.productName = productName;
+        this.price = price;
+    }
+
+
     // Getters
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
+
 
     public String getProductName() {
         return productName;
@@ -73,9 +97,10 @@ public class Product {
     }
 
     // Setters
-    public void setProductId(int productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
+
 
     public void setProductName(String productName) {
         this.productName = productName;
